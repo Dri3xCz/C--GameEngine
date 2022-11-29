@@ -84,7 +84,7 @@ namespace GameEngine.GameEngine
         {
             foreach (Shape shape in Shapes)
             {
-                if (shape.tag != "Player") 
+                if (shape.movable == false) 
                 {
                     break;
                 }
@@ -92,7 +92,7 @@ namespace GameEngine.GameEngine
                 shape.maxPosY = new Vector2(999, -999);
                 foreach (Shape shape_ in Shapes)
                 { 
-                    if (shape.position.Y + shape.scale.Y > shape_.position.Y && shape.position.Y < shape_.position.Y + shape_.scale.Y && shape_.tag != "Player") 
+                    if (shape.position.Y + shape.scale.Y > shape_.position.Y && shape.position.Y < shape_.position.Y + shape_.scale.Y && shape_.tag != shape.tag) 
                     {
                         if (shape.position.X + shape.scale.X <= shape_.position.X) 
                         {
@@ -110,7 +110,7 @@ namespace GameEngine.GameEngine
                         }
                     }
 
-                    if (shape.position.X + shape.scale.X > shape_.position.X && shape.position.X < shape_.position.X + shape_.scale.X && shape_.tag != "Player")
+                    if (shape.position.X + shape.scale.X > shape_.position.X && shape.position.X < shape_.position.X + shape_.scale.X && shape_.tag != shape.tag)
                     {
                         if (shape.position.Y + shape.scale.Y <= shape_.position.Y)
                         {

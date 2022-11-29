@@ -18,6 +18,8 @@ namespace GameEngine.GameEngine
         // maxPosX.X = rightMostPosition , maxPosX.Y = leftMostPosition, same for maxPosY (x lower, y upper)
         public Vector2 maxPosX = new Vector2(0, 0);
         public Vector2 maxPosY = new Vector2(0, 0);
+        public bool movable = false;
+        public bool isAppended = false;
 
 
         public string tag = string.Empty;
@@ -27,13 +29,14 @@ namespace GameEngine.GameEngine
         public List<Shape> appendedShapes = new List<Shape>();
         public bool cameraIsAppended = false;
 
-        public Shape(Vector2 pos, Vector2 scale, string tag, Color color) 
+        public Shape(Vector2 pos, Vector2 scale, string tag, Color color, bool movable) 
         {
             this.position = pos;
             this.lastPos = new Vector2(0,0);
             this.scale = scale;
             this.tag = tag;
             this.color = color;
+            this.movable = movable;
             Engine.AddShape(this);
             Log.Info("A shape has been created, tag: " + this.tag);
         }
@@ -53,6 +56,13 @@ namespace GameEngine.GameEngine
             Vector2 oldpos = Vector2.Zero();
             oldpos.X = this.position.X;
             oldpos.Y = this.position.Y;
+
+            foreach (Shape shape in appendedShapes)
+            {
+                //Zjistim kde je shape vuci base
+                //nastavit maximalní hodnoty podle pozice
+                //doufat
+            }
            
             if (force.X > 0)
             {
@@ -93,7 +103,7 @@ namespace GameEngine.GameEngine
             }
 
             foreach (Shape shape in appendedShapes)
-            {
+            {             
                 shape.ShapeMove(new Vector2(position.X - oldpos.X, position.Y - oldpos.Y));
             }
 
@@ -106,6 +116,7 @@ namespace GameEngine.GameEngine
         public void AppendShape(Shape shape) 
         {
             appendedShapes.Add(shape);
+            shape.isAppended = true;
         }
 
         public Shape IsColiding(string tag) 
